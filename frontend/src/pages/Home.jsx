@@ -7,6 +7,27 @@ const Home = () => {
     const [folders, setFolders] = useState([]);
     const [account, setAccount] = useState(null);
 
+    // Download folder logic
+    const downloadFolder = (folder) => {
+        console.log('Downloading folder:', folder);
+    
+        // Ensure folder.files is an array and contains file data
+        if (folder[3] && Array.isArray(folder[3])) {
+            folder[3].forEach((file) => {
+                console.log('Downloading file:', file);
+    
+                // Check that the file array has the CID at index 0
+                const cid = file[0]; // The CID is the first element in the file array
+    
+                // Construct the Pinaka IPFS gateway URL with the file's CID
+                const fileLink = `https://gateway.pinata.cloud/ipfs/${cid}`;  // Pinaka gateway format
+                window.open(fileLink, '_blank');
+            });
+        } else {
+            console.error('No files available to download for this folder.');
+        }
+    };
+
     useEffect(() => {
         const fetchFolders = async () => {
             const folder = await getAllFolders();
@@ -47,14 +68,6 @@ const Home = () => {
             </div>
         </div>
     );
-};
-
-// Download folder logic
-const downloadFolder = (folder) => {
-    folder.files.forEach((file) => {
-        const fileLink = `https://<CIDv1>.ipfs.web3approved.com/${file.cid}`;
-        window.open(fileLink, '_blank');
-    });
 };
 
 export default Home;
