@@ -9,13 +9,10 @@ const Home = () => {
 
     // Download folder logic
     const downloadFolder = (folder) => {
-        console.log('Downloading folder:', folder);
     
         // Ensure folder.files is an array and contains file data
         if (folder[3] && Array.isArray(folder[3])) {
             folder[3].forEach((file) => {
-                console.log('Downloading file:', file);
-    
                 // Check that the file array has the CID at index 0
                 const cid = file[0]; // The CID is the first element in the file array
     
